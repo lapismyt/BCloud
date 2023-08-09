@@ -4,27 +4,16 @@ import random
 import os
 
 app = Flask(__name__)
+AUTHTOKEN = os.environ.get("BCLOUD_AUTHTOKEN")
+print(f"Current authtoken: {AUTHTOKEN}")
 
 @app.route("/")
 def index():
-    return "Это облако принадлежит <a href=\"https://t.me/LapisMYT\">LapisMYT</a>"
+    return render_template("index.html")
 
 @app.route("/newpost", methods=["GET", "POST"])
 def newpost():
-    return """
-    <title>BCloud - New Post</title>
-    <h1>Новый пост</h1>
-    <form class="pform" action="/publish" method="POST">
-    <textarea name="header" placeholder="Заголовок" cols="40"></textarea>
-    <br/><br/>
-    <textarea name="body" placeholder="Текст" cols="40" rows="30"></textarea>
-    <br/><br/>
-    <textarea type="password" name="authtoken" placeholder="Ключ" cols="40"></textarea>
-    <br/><br/>
-    <input type="submit" value="Опубликовать">
-    </form>
-    <style>* {font-size: 30; padding: 10px;} h1 {font-size: 50;}</style>
-    """
+    return render_template("newpost.html")
 
 @app.route("/publish", methods=["POST"])
 def publish():
