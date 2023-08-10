@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template, session
 import json
 import random
-import os
+import os, sys
 import pickle
 
 app = Flask(__name__)
@@ -43,4 +43,7 @@ def posts(post_id):
         return "Not Found", 404
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    if len(sys.argv) == 3:
+        app.run(debug=False, host=sys.argv[1], port=sys.argv[2])
+    else:
+        app.run(debug=False)
