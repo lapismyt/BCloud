@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, jsonify
+from flask import Flask, request, redirect, render_template, session, jsonify, url_for, send_from_directory
 import json
 import random
 import os, sys
@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 AUTHTOKEN = os.environ.get("BCLOUD_AUTHTOKEN")
-UPLOAD_FOLDER = "/uploads"
+UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = set(["txt", "png", "pdf", "jpg", "gif", "jpeg", "mp3", "mp4", "apk"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 print(f"Current authtoken: {AUTHTOKEN}")
@@ -56,12 +56,15 @@ def posts(post_id):
 def upload():
     if request.method == "POST":
         file = request.files["file"]
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
-    return render_template("upload_file.html", filename=filename)
+        if request.form["key"] == AUTHTOKEN:
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return redirect(url_for('uploaded_file',
+                                        filename=filename))
+        else:
+            return "<h1>Access Denied</h1>", 403
+    return render_template("upload_file.html")
 
 @app.route("/uploaded_file/<filename>")
 def uploaded_file(filename):
