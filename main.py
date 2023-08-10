@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session
+from flask import Flask, request, redirect, render_template, session, jsonify
 import json
 import random
 import os, sys
@@ -20,12 +20,12 @@ def newpost():
 @app.route("/publish", methods=["POST"])
 def publish():
     if request.form["authtoken"] == os.environ.get("BCLOUD_AUTHTOKEN"):
-        posts_db = pickle.load(open("posts.pkl", "rb"))
+        posts_db = pickle.load(open("data/posts.pkl", "rb"))
         post_id = str(random.randint(10000, 99999))
         post = {"header": request.form["header"], "body": request.form["body"], "id": post_id}
         print(post)
         posts_db.add(post)
-        pickle.dump(posts_db, open("posts.pkl", "wb"))
+        pickle.dump(posts_db, open("data/posts.pkl", "wb"))
         if not ("posts" in session):
             session["posts"] = []
         session["posts"].append(post_id)
@@ -35,7 +35,7 @@ def publish():
 
 @app.route("/posts/<post_id>")
 def posts(post_id):
-    posts_db = pickle.load(open("posts.pkl", "rb"))
+    posts_db = pickle.load(open("data/posts.pkl", "rb"))
     if posts_db.get(post_id) is not None:
         post = posts_db.get(post_id)
         return render_template("post.html", header=post["header"], body=post["body"])
@@ -47,3 +47,11 @@ if __name__ == "__main__":
         app.run(debug=False, host=sys.argv[1], port=sys.argv[2])
     else:
         app.run(debug=False)
+
+@app.route("/admin/api/{token}/{do}", methods=["GET"])
+def admin_features(token, do):
+    tokens = json.load(open("data/api_tokens.json"))
+    if token not in tokens:
+        return 403
+    else:
+        return 403
