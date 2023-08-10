@@ -3,3 +3,4 @@
 *.swo
 *.py[cod]
 __pycache__
+uploads/*
