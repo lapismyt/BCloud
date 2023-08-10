@@ -39,7 +39,7 @@ def posts(post_id):
     posts_db = pickle.load(open("data/posts.pkl", "rb"))
     if posts_db.get(post_id) is not None:
         post = posts_db.get(post_id)
-        return render_template("post.html", header=post["header"], body=post["body"], og_header=urllib.parse.quote_plus(post["header"]))
+        return render_template("post.html", header=post["header"], body=post["body"], og_header=post["header"].replace(" ", "%20"))
     else:
         return "Not Found", 404
 
