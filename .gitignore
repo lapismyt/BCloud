@@ -1,0 +1,5 @@
+*.pkl
+*.swp
+*.swo
+*.py[cod]
+__pycache__
