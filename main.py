@@ -3,7 +3,6 @@ import json
 import random
 import os, sys
 import pickle
-from flaskext.markdown import Markdown
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
