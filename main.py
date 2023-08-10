@@ -8,8 +8,15 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 AUTHTOKEN = os.environ.get("BCLOUD_AUTHTOKEN")
+UPLOAD_FOLDER = "/uploads"
+ALLOWED_EXTENSIONS = set(["txt", "png", "pdf", "jpg", "gif", "jpeg", "mp3", "mp4", "apk"])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 print(f"Current authtoken: {AUTHTOKEN}")
 here = os.path.dirname(os.path.abspath(__file__))
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route("/")
 def index():
@@ -44,6 +51,26 @@ def posts(post_id):
         return res
     else:
         return "<h1>Not Found</h1>", 404
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        file = request.files["file"]
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return render_template("upload_file.html", filename=filename)
+
+@app.route("/uploaded_file/<filename>")
+def uploaded_file(filename):
+    return render_template("uploaded_file.html", filename=filename)
+
+@app.route("/uploads/<filename>")
+def uploads(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
