@@ -3,6 +3,7 @@ import json
 import random
 import os, sys
 import pickle
+import urllib.parse
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -38,7 +39,7 @@ def posts(post_id):
     posts_db = pickle.load(open("data/posts.pkl", "rb"))
     if posts_db.get(post_id) is not None:
         post = posts_db.get(post_id)
-        return render_template("post.html", header=post["header"], body=post["body"])
+        return render_template("post.html", header=post["header"], body=post["body"], og_header=urllib.parse.quote_plus(post["header"]))
     else:
         return "Not Found", 404
 
