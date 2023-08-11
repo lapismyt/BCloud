@@ -14,7 +14,7 @@ def file_handler(message):
     elif message.audio:
         file_info = bot.get_file(message.audio.file_id)
     elif message.photo:
-        file_info = bot.get_file(message.photo[0].file_id)
+        file_info = bot.get_file(message.photo[-1].file_id)
     elif message.video:
         file_info = bot.get_file(message.video.file_id)
     print(file_info.file_path)
