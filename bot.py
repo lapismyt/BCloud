@@ -3,7 +3,7 @@ import os
 
 TOKEN = os.environ.get("BCLOUD_TG_TOKEN")
 HOST = os.environ.get("BCLOUD_HOST")
-PORT = os.environ.get("BCLOUD_PORT")
+PORT = int(os.environ.get("BCLOUD_PORT"))
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -19,7 +19,7 @@ def file_handler(message):
     src = "uploads/" + file_name
     with open(src, "wb") as f:
         f.write(downloaded_file)
-    if PORT == 80 or PORT == 443:
+    if PORT in [80, 443]:
         index = HOST
     else:
         index = f"{HOST}:{str(PORT)}"
