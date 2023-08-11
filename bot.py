@@ -22,6 +22,18 @@ def text_handler(message):
         else:
             bot.reply_to(message, f"{HOST}:{PORT}/u/{url_id}")
 
+@bot.message_handler(commands=["urls"])
+def urls_cmd(message):
+    urls_db = json.load(open("data/urls.json"))
+    reply = "Статистика переходов по URL за всё время:\n\n"
+    if PORT in [80, 443]:
+        index = f"{HOST}/u/"
+    else:
+        index = f"{HOST}:{PORT}/u/"
+    for url in urls_db.keys():
+        reply += f"```{index + urls_db[url]['id']}``` - ```{urls_db[url]['link']}```:\n{str(urls_db[url]['usages'])} переходов\n\n"
+    bot.reply_to(message, reply, parse_mode="markdown")
+
 @bot.message_handler(content_types=["document", "audio", "photo", "video", "gif"])
 def file_handler(message):
     if message.document:
