@@ -14,7 +14,8 @@ UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = set(["txt", "png", "pdf", "jpg", "gif", "jpeg", "mp3", "mp4", "apk"])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 print(f"Current authtoken: {AUTHTOKEN}")
-here = os.path.dirname(os.path.abspath(__file__))
+HOST = os.environ.get("BCLOUD_HOST")
+PORT = os.environ.get("BCLOUD_PORT")
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -97,6 +98,6 @@ def shortlink(url_id):
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
-        app.run(debug=False, host=sys.argv[1], port=sys.argv[2])
+        app.run(debug=False, host=HOST, port=PORT)
     else:
         app.run(debug=False)
