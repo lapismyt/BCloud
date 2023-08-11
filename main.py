@@ -1,9 +1,11 @@
 from flask import Flask, request, redirect, render_template, session, jsonify, url_for, send_from_directory
+from markupsafe import escape
 import json
 import random
 import os, sys
 import pickle
 from werkzeug.utils import secure_filename
+from markdown import markdown
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -31,7 +33,7 @@ def publish():
     if request.form["authtoken"] == os.environ.get("BCLOUD_AUTHTOKEN"):
         posts_db = json.load(open("data/posts.json"))
         post_id = str(random.randint(10000, 99999))
-        post = {"header": request.form["header"], "body": request.form["body"], "id": post_id}
+        post = {"header": request.form["header"], "body": escape(request.form["body"]), "id": post_id}
         print(post)
         posts_db[post_id] = post
         json.dump(posts_db, open("data/posts.json", "w"))
@@ -47,7 +49,7 @@ def posts(post_id):
     posts_db = json.load(open("data/posts.json"))
     if posts_db.get(post_id) is not None:
         post = posts_db.get(post_id)
-        res = render_template("post.html", header=post["header"], body=post["body"])
+        res = render_template("post.html", header=post["header"], body=markdown(post["body"]))
         return res
     else:
         return "<h1>Not Found</h1>", 404
