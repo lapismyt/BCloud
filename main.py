@@ -62,20 +62,38 @@ def upload():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                return redirect(url_for('uploaded_file',
-                                        filename=filename))
+                return render_template("uploaded_file.html", filename=filename)
         else:
             return "<h1>Access Denied</h1>", 403
     return render_template("upload_file.html")
-
-@app.route("/uploaded_file/<filename>")
-def uploaded_file(filename):
-    return render_template("uploaded_file.html", filename=filename)
 
 @app.route("/uploads/<filename>")
 def uploads(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+
+@app.route("/urlshortener", methods=["GET"])
+def url_shortener():
+    if "url" in request.args:
+        urls_db = json.load(open("data/urls.json"))
+        url_id = str(random.randint(10000, 100000))
+        url_obj = {"id": url_id, "usages": 0, "link": request.args.get("url")}
+        urls_db[url_id] = url_obj
+        json.dump(urls_db, open("data/urls.json", "w"))
+        return render_template("url_shorted.html", url="http://lapismyt.space"+url_for("shortlink", url_id=url_id))
+    else:
+        return render_template("url_shortener.html")
+
+@app.route("/u/<url_id>")
+def shortlink(url_id):
+    urls_db = json.load(open("data/urls.json"))
+    if url_id in urls_db.keys():
+        url = urls_db[url_id]["link"]
+        urls_db[url_id]["usages"] += 1
+        json.dump(urls_db, open("data/urls.json", "w"))
+        return redirect(url)
+    else:
+        return "<h1>Not Found</h1>", 404
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
