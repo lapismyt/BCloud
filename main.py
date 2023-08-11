@@ -97,7 +97,4 @@ def shortlink(url_id):
         return "<h1>Not Found</h1>", 404
 
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        app.run(debug=False, host=HOST, port=PORT)
-    else:
-        app.run(debug=False)
+    app.run(debug=False, host=HOST, port=PORT)
