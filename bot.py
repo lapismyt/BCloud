@@ -51,7 +51,7 @@ def file_handler(message):
     if hasattr(file_info, "file_name"):
         file_name = file_info.file_name
     else:
-        file_name = str(file_info.file_id)[-5:] + "." + file_info.file_path.split(".")[-1]
+        file_name = str(random.randint(10000, 99999999)) + "." + file_info.file_path.split(".")[-1]
     src = "uploads/" + file_name
     with open(src, "wb") as f:
         f.write(downloaded_file)
