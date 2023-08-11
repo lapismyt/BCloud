@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, jsonify, url_for, send_from_directory
+from flask.logging import default_handler
 from markupsafe import escape
 import json
 import random
@@ -30,6 +31,7 @@ class TGHandler(logging.StreamHandler):
 root = logging.getLogger()
 tg_handler = TGHandler()
 root.addHandler(tg_handler)
+root.addHandler(default_handler)
 
 def allowed_file(filename):
     return '.' in filename and \
