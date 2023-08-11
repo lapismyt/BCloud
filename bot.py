@@ -7,9 +7,16 @@ PORT = int(os.environ.get("BCLOUD_PORT"))
 
 bot = telebot.TeleBot(TOKEN)
 
-@bot.message_handler(content_types=["document"])
+@bot.message_handler(content_types=["document", "audio", "photo", "video"])
 def file_handler(message):
-    file_info = bot.get_file(message.document.file_id)
+    if message.document:
+        file_info = bot.get_file(message.document.file_id)
+    elif message.audio:
+        file_info = bot.get_file(message.audio.file_id)
+    elif message.photo:
+        file_info = bot.get_file(message.photo.file_id)
+    elif message.video:
+        file_info = bot.get_file(message.video.file_id)
     print(file_info.file_path)
     downloaded_file = bot.download_file(file_info.file_path)
     if hasattr(file_info, "file_name"):
