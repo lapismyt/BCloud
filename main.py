@@ -7,7 +7,7 @@ import pickle
 from werkzeug.utils import secure_filename
 from markdown import markdown
 import logging
-import tg_logger
+import telebot
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -20,8 +20,16 @@ HOST = os.environ.get("BCLOUD_HOST")
 PORT = os.environ.get("BCLOUD_PORT")
 TG_LOGGER_TOKEN = os.environ.get("BCLOUD_TGLOGGER_TOKEN")
 TG_LOGGER_USER = os.environ.get("BCLOUD_TGLOGGER_USER")
-handler = tg_logger.setup(app.logger, token=TG_LOGGER_TOKEN, users=[int(TG_LOGGER_USER)])
-handler.setLevel(logging.DEBUG)
+
+bot = telebot.TeleBot(TG_LOGGER_TOKEN)
+
+class TGHandler(logging.StreamHandler):
+    def emit(self, record):
+        bot.send_message(TG_LOGGER_USER, self.format(record))
+
+root = logging.getLogger()
+tg_handler = TGHandler()
+root.addHandler(tg_handler)
 
 def allowed_file(filename):
     return '.' in filename and \
