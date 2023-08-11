@@ -19,7 +19,7 @@ def file_handler(message):
     src = "uploads/" + file_name
     with open(src, "wb") as f:
         f.write(downloaded_file)
-    if PORT in [80, 443]:
+    if PORT == 80 or PORT == 443:
         index = HOST
     else:
         index = f"{HOST}:{str(PORT)}"
