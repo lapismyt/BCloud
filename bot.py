@@ -14,7 +14,7 @@ def text_handler(message):
     if "http" in message.text:
         urls_db = json.load(open("data/urls.json"))
         url_id = str(random.randint(10000, 100000))
-        rl_obj = {"id": url_id, "usages": 0, "link": message.text[1]}
+        url_obj = {"id": url_id, "usages": 0, "link": message.text[1]}
         urls_db[url_id] = url_obj
         json.dump(urls_db, open("data/urls.json", "w"))
         if PORT in [80, 443]:
