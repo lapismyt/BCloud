@@ -31,6 +31,11 @@ def banip_cmd(message):
         json.dump(blacklist, open("data/blacklist.json", "w"))
         bot.reply_to(message, f"IP {args[1]} забанен!")
 
+@bot.message_hander(commands=["blacklist"])
+def blacklist_cmd(message):
+    blacklist = json.load(open("data/blacklist.json"))
+    bot.reply_to(message, "\n".join(blacklist["ip"]))
+
 @bot.message_handler(commands=["urls"])
 def urls_cmd(message):
     urls_db = json.load(open("data/urls.json"))
