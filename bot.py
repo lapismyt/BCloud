@@ -22,6 +22,15 @@ def text_handler(message):
         else:
             bot.reply_to(message, f"{HOST}:{PORT}/u/{url_id}")
 
+@bot.message_handler(commands=["banip"])
+def banip_cmd(message):
+    blacklist = json.load(open("data/blacklist.json"))
+    args = message.text.split()
+    if (len(args) == 2):
+        blacklist["ip"].append(args[1])
+        json.dump(blacklist, open("data/blacklist.json", "w"))
+        bot.reply_to(message, f"IP {args[1]} забанен!")
+
 @bot.message_handler(commands=["urls"])
 def urls_cmd(message):
     urls_db = json.load(open("data/urls.json"))

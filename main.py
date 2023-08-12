@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, jsonify, url_for, send_from_directory
+from flask import Flask, request, redirect, render_template, session, jsonify, url_for, send_from_directory, abort
 from flask.logging import default_handler
 from markupsafe import escape
 import json
@@ -36,6 +36,17 @@ root.addHandler(default_handler)
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@app.before_request
+def check_request():
+    ip = request.environ.get("REMOTE_ADDR")
+    blacklist = json.load(open("data/blacklist.json"))
+    if (ip in blacklist["ip"]):
+        abort(403)
+    elif ("admin" in request.endpoint.lower()):
+        blacklist["ip"].append(ip)
+        json.dump(blacklist, open("data/blacklist.json", "w"))
+    else: pass
 
 @app.route("/")
 def index():
