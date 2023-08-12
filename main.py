@@ -43,7 +43,7 @@ def check_request():
     blacklist = json.load(open("data/blacklist.json"))
     if (ip in blacklist["ip"]):
         abort(403)
-    elif ("admin" in request.endpoint.lower()):
+    elif ("admin" in str(request.base_url).lower()):
         blacklist["ip"].append(ip)
         json.dump(blacklist, open("data/blacklist.json", "w"))
     else: pass
