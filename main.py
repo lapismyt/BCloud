@@ -100,6 +100,14 @@ def uploads(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
 
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory("root", "robots.txt")
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    return send_from_directory("root", "sitemap.xml")
+
 @app.route("/urlshortener", methods=["GET"])
 def url_shortener():
     if "url" in request.args:

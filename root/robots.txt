@@ -1,0 +1,7 @@
+User-agent: *
+Crawl-delay: 1
+Host: lapismyt.space
+Disallow: /uploads/
+Disallow: /u/
+Disallow: /admin/
+Sitemap: http://lapismyt.space/sitemap.xml
