@@ -6,6 +6,7 @@ import random
 TOKEN = os.environ.get("BCLOUD_TG_TOKEN")
 HOST = os.environ.get("BCLOUD_HOST")
 PORT = int(os.environ.get("BCLOUD_PORT"))
+ADMIN = int(os.environ.get("BCLOUD_TG_ADMIN"))
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -24,6 +25,8 @@ def text_handler(message):
 
 @bot.message_handler(commands=["banip"])
 def banip_cmd(message):
+    if (message.from_user.id != ADMIN):
+        return None
     blacklist = json.load(open("data/blacklist.json"))
     args = message.text.split()
     if (len(args) == 2):
@@ -33,11 +36,15 @@ def banip_cmd(message):
 
 @bot.message_handler(commands=["blacklist"])
 def blacklist_cmd(message):
+    if (message.from_user.id != ADMIN):
+        return None
     blacklist = json.load(open("data/blacklist.json"))
     bot.reply_to(message, "\n".join(blacklist["ip"]))
 
 @bot.message_handler(commands=["urls"])
 def urls_cmd(message):
+    if (message.from_user.id != ADMIN):
+        return None
     urls_db = json.load(open("data/urls.json"))
     reply = "Статистика переходов по URL за всё время:\n\n"
     if PORT in [80, 443]:
@@ -50,6 +57,8 @@ def urls_cmd(message):
 
 @bot.message_handler(content_types=["document", "audio", "photo", "video", "gif"])
 def file_handler(message):
+    if (message.from_user.id != ADMIN):
+        return None
     if message.document:
         file_info = bot.get_file(message.document.file_id)
     elif message.audio:
