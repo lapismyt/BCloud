@@ -1,9 +1,113 @@
-<title>BCloud - Главная</title>
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Главная">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://lapismyt.space/">
+  <meta property="og:image" content="http://lapismyt.space/uploads/66328763.jpg">
+  <meta property="og:description" content="Главная страница - о себе, проекты, ссылки.">
+  <meta property="og:site_name" content="BCloud">
+  <title>BCloud - Главная</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    p {
+      font-size: 16px;
+    }
+    .section {
+      padding: 50px;
+    }
+    .section:nth-child(odd) {
+      background-color: #292929;
+    }
+    .section:nth-child(even) {
+      background-color: #212121;
+    }
+    .animated {
+      animation: fadeInUp 1s ease;
+    }
+    a {
+      color: #4B8BBE;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover {
+      color: #6fb6f2;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 30px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
 <body>
-<h1>Это облако принадлежит <a href="https://t.me/LapisMYT">LapisMYT</a></h1>
-<ul>
-	<li><a href="/newpost">Опубликовать пост</a></li>
-	<li><a href="/upload">Загрузить файл</a></li>
-	<li><a href="/urlshortener">Сократить ссылку [PUBLIC]</a></li>
-</ul>
+  <div class="section animated">
+    <h1>О себе</h1>
+    <p>Python3 программист, делаю софт с использованием FastAPI, pyTelegramBotAPI, CLI. Играю в Minecraft.</p>
+  </div>
+  <div class="section animated">
+    <h2>Telegram-боты</h2>
+    <ul>
+      <li><i class="fab fa-telegram icon"></i><a href="https://t.me/HordeAI_Bot">@HordeAI_Bot</a> - бесплатный бот для продвинутой генерации изображений с помощью Stable Diffusion, основанный на aihorde.net.</li>
+      <li><i class="fab fa-telegram icon"></i><a href="https://t.me/Adwizard_BOT">@Adwizard_BOT</a> - бесплатный бот с GPT моделями, такими как GPT-4, GPT-3.5 и т.д. и несколькими Open-Source LLM моделями.</li>
+      <li><i class="fab fa-telegram icon"></i><a href="https://t.me/TT_VideoDownloader_Bot">@TT_VideoDownloader_Bot</a> - небольшой бот для скачивания видео с YouTube, разработка приостановлена на неопределенный срок.</li>
+    </ul>
+  </div>
+  <div class="section animated">
+    <h2>Веб-проекты</h2>
+    <p><i class="fas fa-link icon"></i>- <a href="http://lapismyt.space/urlshortener">Сократитель ссылок</a></p>
+  </div>
+  <div class="section animated">
+    <h2>Соц-сети</h2>
+    <ul>
+      <li><i class="fab fa-telegram icon"></i>Telegram - <a href="https://t.me/lapismyt">@lapismyt</a></li>
+      <li><i class="fab fa-github icon"></i>GitHub - <a href="https://github.com/lapismyt">@lapismyt</a></li>
+      <li><i class="fab fa-github icon"></i>PieMC (мой проект, ядро для Minecraft, написанное на Python) - <a href="https://github.com/piemc-dev/piemc">@piemc-dev/piemc</a></li>
+      <li><i class="fab fa-telegram icon"></i>Telegram-канал - <a href="https://t.me/lapismyt_channel">@lapismyt_channel</a></li>
+      <li><i class="fab fa-discord icon"></i>Discord - <a href="https://discordapp.com/users/965869347602067467">@lapismyt</a></li>
+    </ul>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 </body>
+</html>
