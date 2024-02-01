@@ -1,16 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta property="og:title" content="{{ header }}" />
-<meta property="og:description" content="Пост от LapisMYT" />
-<title>Пост - {{ header }}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Пост «{{ header }}»">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="http://lapismyt.space/uploads/66328763.jpg">
+  <meta property="og:description" content="{{ body|safe }}">
+  <meta property="og:site_name" content="BCloud">
+  <title>BCloud - Пост «{{ header }}»</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .section {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .section:nth-child(odd) {
+      background-color: #292929;
+    }
+
+    .section:nth-child(even) {
+      background-color: #212121;
+    }
+
+    .animated {
+      animation: fadeInUp 1s ease;
+    }
+
+    a {
+      color: #4B8BBE;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #6fb6f2;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 30px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>{{ header }}</h1>
-<p>{{ body|safe }}</p>
+  <div class="section animated">
+    <h1>{{ header }}</h1>
+    <div>{{ body|safe }}</div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 </body>
-<style>
-* {color: #DDDDDD;}
-p {font-size: 40px; padding-left: 10px;}
-h1 {font-size: 65px; text-align: center;}
-body {background: linear-gradient(to bottom right, black, 85%, gray); background-size: cover; background-repeat: no-repeat; width: 100%; height: 1800px;}
-</style>
+</html>
