@@ -19,9 +19,9 @@ def text_handler(message):
         urls_db[url_id] = url_obj
         json.dump(urls_db, open("data/urls.json", "w"))
         if PORT in [80, 443]:
-            bot.reply_to(message, f"{HOST}/u/{url_id}")
+            bot.reply_to(message, f"http://{HOST}/u/{url_id}")
         else:
-            bot.reply_to(message, f"{HOST}:{PORT}/u/{url_id}")
+            bot.reply_to(message, f"http://{HOST}:{PORT}/u/{url_id}")
 
 @bot.message_handler(commands=["banip"])
 def banip_cmd(message):
@@ -48,9 +48,9 @@ def urls_cmd(message):
     urls_db = json.load(open("data/urls.json"))
     reply = "Статистика переходов по URL за всё время:\n\n"
     if PORT in [80, 443]:
-        index = f"{HOST}/u/"
+        index = f"http://{HOST}/u/"
     else:
-        index = f"{HOST}:{PORT}/u/"
+        index = f"http://{HOST}:{PORT}/u/"
     for url in urls_db.keys():
         reply += f"`{index + urls_db[url]['id']}` - `{urls_db[url]['link']}`:\n{str(urls_db[url]['usages'])} переходов\n\n"
     bot.reply_to(message, reply, parse_mode="markdown")
@@ -79,9 +79,9 @@ def file_handler(message):
     with open(src, "wb") as f:
         f.write(downloaded_file)
     if PORT in [80, 443]:
-        index = HOST
+        index = f"http://HOST"
     else:
-        index = f"{HOST}:{str(PORT)}"
+        index = f"http://{HOST}:{str(PORT)}"
     bot.reply_to(message, f"{index}/uploads/{file_name}")
 
 if __name__ == "__main__":
