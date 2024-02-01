@@ -128,9 +128,10 @@ def url_shortener():
         url_obj = {"id": url_id, "usages": 0, "link": request.args.get("url")}
         urls_db[url_id] = url_obj
         json.dump(urls_db, open("data/urls.json", "w"))
-        return render_template("url_shorted.html", url="http://lapismyt.space"+url_for("shortlink", url_id=url_id))
+        url = "http://lapismyt.space"+url_for("shortlink", url_id=url_id)
     else:
-        return render_template("url_shortener.html")
+        url = "http://lapismyt.space/u/40977"
+    return render_template("url_shortener.html", url=url)
 
 @app.route("/u/<url_id>")
 def shortlink(url_id):
