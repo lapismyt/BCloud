@@ -1,12 +1,128 @@
-<title>BCloud - Новый пост</title>
-<h1>Новый пост</h1>
-<form class="pform" action="/publish" method="POST">
-<textarea name="header" placeholder="Заголовок" cols="40"></textarea>
-<br/><br/>
-<textarea name="body" placeholder="Текст" cols="40" rows="30"></textarea>
-<br/><br/>
-<textarea type="password" name="authtoken" placeholder="Ключ" cols="40"></textarea>
-<br/><br/>
-<input type="submit" value="Опубликовать">
-</form>
-<style>* {font-size: 30; padding: 10px;} h1 {font-size: 50;}</style>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Создание поста">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://lapismyt.space/newpost">
+  <meta property="og:image" content="http://lapismyt.space/uploads/66328763.jpg">
+  <meta property="og:description" content="Создать новый пост">
+  <meta property="og:site_name" content="BCloud">
+  <title>BCloud - Создание поста</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      background-color: #292929;
+      color: #000000;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #eeeeee;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .section {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .section:nth-child(odd) {
+      background-color: #292929;
+    }
+
+    .section:nth-child(even) {
+      background-color: #212121;
+    }
+
+    .animated {
+      animation: fadeInUp 1s ease;
+    }
+
+    a {
+      color: #4B8BBE;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #6fb6f2;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon {
+      margin-right: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 30px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+
+    /* Custom styles for creating a post */
+    input[type="text"],
+    textarea,
+    input[type="password"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4B8BBE;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #6fb6f2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section animated">
+    <h1>Создание поста</h1>
+    <form action="#" method="POST">
+      <input type="text" name="header" placeholder="Заголовок" required>
+      <textarea name="body" rows="6" placeholder="Текст" required></textarea>
+      <input type="password" name="authtoken" placeholder="Токен" required>
+      <button type="submit">Опубликовать пост</button>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>
