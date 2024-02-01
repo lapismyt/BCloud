@@ -48,6 +48,10 @@ def check_request():
         json.dump(blacklist, open("data/blacklist.json", "w"))
     else: pass
 
+@app.errorhandler(404)
+def not_found_handle(e):
+    return render_template("not_found.html"), 404
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -80,7 +84,7 @@ def posts(post_id):
         res = render_template("post.html", header=post["header"], body=markdown(post["body"]))
         return res
     else:
-        return "<h1>Not Found</h1>", 404
+        return render_template("not_found.html"), 404
 
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
@@ -108,6 +112,8 @@ def robots_txt():
 def sitemap_xml():
     return send_from_directory("root", "sitemap.xml")
 
+@
+
 @app.route("/urlshortener", methods=["GET"])
 def url_shortener():
     if "url" in request.args:
@@ -129,7 +135,7 @@ def shortlink(url_id):
         json.dump(urls_db, open("data/urls.json", "w"))
         return redirect(url)
     else:
-        return "<h1>Not Found</h1>", 404
+        return render_template("not_found.html"), 404
 
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0", port=PORT)
