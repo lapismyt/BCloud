@@ -58,23 +58,22 @@ def index():
 
 @app.route("/newpost", methods=["GET", "POST"])
 def newpost():
-    return render_template("newpost.html")
-
-@app.route("/publish", methods=["POST"])
-def publish():
-    if request.form["authtoken"] == os.environ.get("BCLOUD_AUTHTOKEN"):
-        posts_db = json.load(open("data/posts.json"))
-        post_id = str(random.randint(10000, 99999))
-        post = {"header": request.form["header"], "body": escape(request.form["body"]), "id": post_id}
-        print(post)
-        posts_db[post_id] = post
-        json.dump(posts_db, open("data/posts.json", "w"))
-        if not ("posts" in session):
-            session["posts"] = []
-        session["posts"].append(post_id)
-        return redirect(f"/posts/{post_id}")
+    if request.method == "POST":
+        if request.form["authtoken"] == os.environ.get("BCLOUD_AUTHTOKEN"):
+            posts_db = json.load(open("data/posts.json"))
+            post_id = str(random.randint(10000, 99999))
+            post = {"header": request.form["header"], "body": escape(request.form["body"]), "id": post_id}
+            print(post)
+            posts_db[post_id] = post
+            json.dump(posts_db, open("data/posts.json", "w"))
+            if not ("posts" in session):
+                session["posts"] = []
+            session["posts"].append(post_id)
+            return redirect(f"/posts/{post_id}")
+        else:
+            return "Неверный ключ", 403
     else:
-        return "Неверный ключ", 403
+        return render_template("newpost.html")
 
 @app.route("/posts/<post_id>")
 def posts(post_id): 
