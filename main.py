@@ -89,7 +89,7 @@ def posts(post_id):
 def upload():
     if request.method == "POST":
         file = request.files["file"]
-        if request.form["key"] == AUTHTOKEN:
+        if request.form["key"] == os.environ.get("BCLOUD_AUTHTOKEN"):
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
