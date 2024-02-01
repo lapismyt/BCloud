@@ -112,7 +112,9 @@ def robots_txt():
 def sitemap_xml():
     return send_from_directory("root", "sitemap.xml")
 
-@
+@app.route("/not_found.html")
+def not_found_html():
+    return render_template("not_found.html")
 
 @app.route("/urlshortener", methods=["GET"])
 def url_shortener():
