@@ -52,7 +52,7 @@ def urls_cmd(message):
     else:
         index = f"{HOST}:{PORT}/u/"
     for url in urls_db.keys():
-        reply += f"```{index + urls_db[url]['id']}``` - ```{urls_db[url]['link']}```:\n{str(urls_db[url]['usages'])} переходов\n\n"
+        reply += f"`{index + urls_db[url]['id']}` - `{urls_db[url]['link']}`:\n{str(urls_db[url]['usages'])} переходов\n\n"
     bot.reply_to(message, reply, parse_mode="markdown")
 
 @bot.message_handler(content_types=["document", "audio", "photo", "video", "gif"])
