@@ -3,3 +3,4 @@ markdown
 pytelegrambotapi
 markupsafe
 tg-logger
+pyopenssl
